@@ -1,4 +1,4 @@
-extends Camera2D
+extends TextureRect
 export var zoomspeed = 10.0
 export var zoommargin = 0.1
 
@@ -21,11 +21,11 @@ var back_zoom = .01
 
 func _process(delta):
 	#zoom in
-	zoom.x = lerp(zoom.x, zoom.x * zoomfactor, zoomspeed * delta)
-	zoom.y = lerp(zoom.y, zoom.y * zoomfactor, zoomspeed * delta)
+	rect_size.x = lerp(rect_size.x, rect_size.x * zoomfactor, zoomspeed * delta)
+	rect_size.y = lerp(rect_size.y, rect_size.y * zoomfactor, zoomspeed * delta)
 
-	zoom.x = clamp(zoom.x, zoomMin, zoomMax)
-	zoom.y = clamp(zoom.y, zoomMin, zoomMax)
+	rect_size.x = clamp(rect_size.x, zoomMin, zoomMax)
+	rect_size.y = clamp(rect_size.y, zoomMin, zoomMax)
 
 	if not zooming:
 		zoomfactor = 1.0
@@ -41,16 +41,9 @@ func _input(event):
 		else:
 			zooming = false
 	if Input.is_action_pressed("scroll button"):
-		zoom.x = 0.2 
-		zoom.y = 0.2
+		rect_size.x = 0.2 
+		rect_size.y = 0.2
 		
 	if event is InputEventMouse:
 		mousepos = event.position
 		mouseposGlobal = get_global_mouse_position()
-		
-
-#EVENT SCREENSHAKE
-func axe_hitted():
-	$Screenshake.start(0.1,4,8)
-
-

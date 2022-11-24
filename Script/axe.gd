@@ -14,7 +14,7 @@ func _process(_delta):
 #ATTACK
 func AxeHit():
 	if Input.is_action_just_pressed("mouse"):
-		print("a")
+		print_debug("BAM!")
 		$AxeAttack.play("attack")
 		pdir = true
 func _on_AxeAttack_animation_finished(anim_name):

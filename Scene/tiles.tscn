@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprite/AT-A2-CliffVS01-GroundTiles.png" type="Texture" id=1]
+
+[node name="Node" type="Node"]
+
+[node name="AT-A2-CliffVS01-GroundTiles" type="Sprite" parent="."]
+position = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 16, 16 )
+
+[node name="AT-A2-CliffVS01-GroundTiles2" type="Sprite" parent="."]
+position = Vector2( 24, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 16, 0, 16, 16 )
+
+[node name="AT-A2-CliffVS01-GroundTiles3" type="Sprite" parent="."]
+position = Vector2( 8, 24 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 16, 16, 16 )
+
+[node name="AT-A2-CliffVS01-GroundTiles4" type="Sprite" parent="."]
+position = Vector2( 24, 24 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 16, 16, 16, 16 )
+
+[node name="AT-A2-CliffVS01-GroundTiles5" type="Sprite" parent="."]
+position = Vector2( 40, 8 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 16, 16 )

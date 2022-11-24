@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://sprite/Arbre11.png" type="Texture" id=1]
+[ext_resource path="res://sprite/Arbre12.png" type="Texture" id=2]
+[ext_resource path="res://Script/Arbre.gd" type="Script" id=3]
+[ext_resource path="res://sprite/Arbre13.png" type="Texture" id=4]
+[ext_resource path="res://sprite/Arbre12_n.png" type="Texture" id=5]
+[ext_resource path="res://sprite/Arbre11_n.png" type="Texture" id=6]
+
+[sub_resource type="CanvasItemMaterial" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "hit2"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0.9, 0 ), Vector2( -0.6, 0 ), Vector2( 0.3, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fall"
+length = 1.25
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 1, 1, 71, -0.12, -16.3202, 0.25, 0 ),
+"times": PoolRealArray( 0, 1.2 )
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.2, -0.6, 0.3 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 3.98565, 3.3127 )
+
+[sub_resource type="OccluderPolygon2D" id=6]
+polygon = PoolVector2Array( -4.03136, -5.97897, 3.96853, -6.02086, 3.99995, -0.0209439, -3.99995, 0.0209439 )
+
+[node name="Arbre" type="StaticBody2D"]
+rotation = 0.00523599
+input_pickable = true
+script = ExtResource( 3 )
+
+[node name="Ombre" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.501961 )
+show_behind_parent = true
+z_index = -1
+texture = ExtResource( 4 )
+offset = Vector2( 0, -44 )
+
+[node name="Bas" type="Sprite" parent="."]
+material = SubResource( 5 )
+texture = ExtResource( 2 )
+normal_map = ExtResource( 5 )
+offset = Vector2( 0, -44 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bas"]
+anims/hit2 = SubResource( 1 )
+
+[node name="Haut" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+normal_map = ExtResource( 6 )
+offset = Vector2( 0, -44 )
+
+[node name="hitfall" type="AnimationPlayer" parent="Haut"]
+anims/fall = SubResource( 2 )
+anims/hit = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.0172119, -3.22477 )
+shape = SubResource( 4 )
+
+[node name="hurbox" type="Area2D" parent="."]
+modulate = Color( 1, 0.188235, 0.188235, 1 )
+position = Vector2( 0.0172119, -3.22477 )
+
+[node name="Area2D" type="Area2D" parent="hurbox"]
+position = Vector2( -0.0172119, 3.22477 )
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="hurbox/Area2D"]
+visible = false
+position = Vector2( 0, -48 )
+polygon = PoolVector2Array( 19, 5, 9, 5, 9, 9, 4, 9, 4, 38, -2, 38, -2, 19, -18, 19, -18, 14, -23.028, 13.9594, -23, 13, -24, 13, -24, -5, -23, -5, -23, -6, -16, -6, -16, -28, -15, -28, -15, -29, 16, -29, 16, -28, 17, -28, 17, -14, 19, -14, 19, -13, 20, -13, 20, 4, 19, 4 )
+
+[node name="collision" type="CollisionShape2D" parent="hurbox"]
+position = Vector2( 1.86265e-09, 2.38419e-07 )
+shape = SubResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="InvulnerableTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 6 )
+
+[connection signal="animation_finished" from="Haut/hitfall" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="hurbox/Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="hurbox/Area2D" to="." method="_on_Area2D_body_exited"]

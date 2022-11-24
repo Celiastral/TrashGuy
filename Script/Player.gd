@@ -1,10 +1,10 @@
 extends KinematicBody2D
 #bordel
 var movedir = Vector2(0,0)
-export var speed = 200
+export var speed = 125
 var spritedir = "down"
 #var dash
-export var dashspeed = 600
+export var dashspeed = 250
 var can_dash = true
 var dashcooldown = false
 
@@ -19,11 +19,12 @@ func _physics_process(_delta):
 	
 	if movedir != Vector2(0,0):
 		anime_switch("walk")
+		
 	else:
 		anime_switch("idle")
 		
-	if can_dash == false:
-		anime_switch("dash")
+#	if can_dash == false:
+#		anime_switch("dash")
 
 func control_loop():
 
@@ -78,6 +79,7 @@ func anime_switch(animation):
 	if $anim2.animation != newanim:
 		$anim2.play(newanim)
 		
+		
 func dash():
 	$DashTimer.start()
 	$Dashcooldown.start()
@@ -100,10 +102,11 @@ func dash():
 			speed = +dashspeed
 
 func _on_DashTimer_timeout():
-	speed = 200
+	speed = 125
 	can_dash = true
 
 func _on_Dashcooldown_timeout():
 	dashcooldown = false
+
 
 

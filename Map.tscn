@@ -13,5 +13,5 @@ texture = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
 texture = ExtResource( 2 )
-vframes = 3
 hframes = 6
+vframes = 3

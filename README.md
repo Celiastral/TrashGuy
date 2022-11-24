@@ -1,4 +1,4 @@
-# TrashGuy
+# INSEREZ-UN-NOM
 ![BIBLE](https://cdn.discordapp.com/attachments/279653808303505409/807578803936559134/Screenshot_20210205-221318_Twitter.jpg)
 ## Fonctionnalités:  
 * Survival Craft Topdown   
@@ -65,3 +65,4 @@
   * systeme de recette
   * monter de niveau debloque de nouvelle recette
   * manger certain plat peut donner certain effet
+  

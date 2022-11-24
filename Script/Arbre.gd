@@ -15,7 +15,7 @@ signal health_updated(health)
 signal killed()
 
 #variable Transparence
-onready var tween = get_node("Tween")
+onready var tween = $Tween
 
 
 func _physics_process(_delta):
@@ -50,7 +50,8 @@ func damage(amount):
 		Invulnerable_Timer.start()
 		_set_health(health - amount)
 		if Hautdestroy != true:
-			get_node("Particles2D").emitting = true
+			var inst = load("res://scene/LeafParticle.tscn").instance()
+			add_child(inst)
 			$Haut/hitfall.play("hit")
 		if Hautdestroy == true:
 			$Bas/AnimationPlayer.play("hit2")
