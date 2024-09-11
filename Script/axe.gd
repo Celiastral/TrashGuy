@@ -1,4 +1,4 @@
-extends Sprite
+extends Sprite2D
 
 #VARIABLE
 signal axehit
@@ -6,8 +6,8 @@ var movedir = Vector2(0,0)
 var mousedir = Vector2()
 var pdir = false
 func _ready() -> void:
-	var main_camera = get_node("/root/TestMap/YSort/Player/Camera2D")
-	self.connect("axehit",main_camera,"axe_hitted")
+	var main_camera = get_node("/root/TestMap/Node2D/Player/Camera2D")
+	self.connect("axehit", Callable(main_camera, "axe_hitted"))
 
 func _process(_delta):
 	AxeHit()

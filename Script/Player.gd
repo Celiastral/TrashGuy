@@ -1,10 +1,10 @@
-extends KinematicBody2D
+extends CharacterBody2D
 #bordel
 var movedir = Vector2(0,0)
-export var speed = 125
+@export var speed = 125
 var spritedir = "down"
 #var dash
-export var dashspeed = 250
+@export var dashspeed = 250
 var can_dash = true
 var dashcooldown = false
 
@@ -53,7 +53,9 @@ func movement_loop():
 
 	var motion = movedir.normalized() * speed
 # warning-ignore:return_value_discarded
-	move_and_slide(motion, Vector2(0,0))
+	set_velocity(motion)
+	#set_up_direction(Vector2(0,0))
+	move_and_slide()
 
 func Animation_Loop():
 	match movedir:
@@ -107,6 +109,3 @@ func _on_DashTimer_timeout():
 
 func _on_Dashcooldown_timeout():
 	dashcooldown = false
-
-
-

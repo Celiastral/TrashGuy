@@ -29,7 +29,7 @@ func axedir():
 	if pdir == false:
 		mousedir = get_global_mouse_position()
 		var ligne = mousedir - $axe/point.global_position
-		var rota = rad2deg(ligne.angle())
+		var rota = rad_to_deg(ligne.angle())
 		if(rota >= -90 and rota <= 90):
 			#$axe.flip_v = false
 			scale.y = 1

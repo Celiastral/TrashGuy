@@ -1,11 +1,11 @@
 extends Camera2D
-export var zoomspeed = 10.0
-export var zoommargin = 0.1
+@export var zoomspeed = 10.0
+@export var zoommargin = 0.1
 
-export var zoomMin = 0.25
-export var zoomMax = 3.0
-export var marginX = 200.0
-export var marginY = 200.0
+@export var zoomMin = 0.25
+@export var zoomMax = 3.0
+@export var marginX = 200.0
+@export var marginY = 200.0
 
 var mousepos = Vector2()
 var mouseposGlobal = Vector2()
@@ -34,9 +34,9 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			zooming = true
-			if event.button_index == BUTTON_WHEEL_UP:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				zoomfactor -= 0.01 * zoomspeed
-			if event.button_index == BUTTON_WHEEL_DOWN:
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				zoomfactor += 0.01 * zoomspeed
 		else:
 			zooming = false
@@ -51,6 +51,4 @@ func _input(event):
 
 #EVENT SCREENSHAKE
 func axe_hitted():
-	$Screenshake.start(0.1,4,8)
-
-
+	$Screenshake.start() #Callable(0.1, 4).bind(8)

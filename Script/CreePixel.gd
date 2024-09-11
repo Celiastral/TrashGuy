@@ -1,23 +1,23 @@
-extends KinematicBody2D
+extends CharacterBody2D
 #bordel
 var movedir = Vector2.ZERO
-export var speed = 50
+@export var speed = 50
 var spritedir = "down"
 var Player = null
 var gohere = false;
 var is_moving = false;
 var randomPoint = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
-export (float) var max_health = 50
-onready var health = max_health setget _set_health
+@export var max_health: float = 50
+@onready var health = max_health: set = _set_health
 var font
-onready var Invulnerable_Timer = $Invulnerable_Timer
+@onready var Invulnerable_Timer = $Invulnerable_Timer
 signal health_updated(health)
 signal killed()
 func _ready():
-	font = DynamicFont.new()
+	font = FontFile.new()
 	font.font_data = load("res://docs/dupix/dupix.ttf")
-	font.size = 8
+	font.fixed_size = 8
 	rng.randomize()
 
 func _physics_process(_delta):
@@ -37,7 +37,7 @@ func _physics_process(_delta):
 		
 
 func Animation_Loop():
-	var dir = stepify(movedir.angle(), PI/4) /(PI/4)
+	var dir = snapped(movedir.angle(), PI/4) /(PI/4)
 	dir = wrapi(int(dir),0,8)
 	
 	match dir:
@@ -60,8 +60,8 @@ func Animation_Loop():
 
 func anime_switch(animation):
 	var newanim = str(animation,spritedir)
-	if $AnimatedSprite.animation != newanim:
-		$AnimatedSprite.play(newanim)
+	if $AnimatedSprite2D.animation != newanim:
+		$AnimatedSprite2D.play(newanim)
 		
 		
 func movement():
@@ -71,12 +71,14 @@ func movement():
 		is_moving = true
 		randomize()
 		randomPoint = Vector2(rng.randi_range(-3,3),rng.randi_range(-3,3)).normalized()
-		$WalkCooldown.start(rand_range(1,6))
+		$WalkCooldown.start(randf_range(1,6))
 
 	if is_moving == true :
 		
-		movedir = move_and_slide(randomPoint) * speed /3
-		$Timer.start(rand_range(1,6))
+		set_velocity(randomPoint)
+		move_and_slide()
+		movedir = velocity * speed /3
+		$Timer.start(randf_range(1,6))
 	else:
 		movedir = Vector2.ZERO
 	
@@ -86,12 +88,14 @@ func Purchase():
 		movedir = global_position.direction_to(Player.global_position) * speed
 		if (position.distance_to(Player.position) <= 15):
 			movedir = Vector2.ZERO
-	movedir = move_and_slide(movedir)
+	set_velocity(movedir)
+	move_and_slide()
+	movedir = velocity
 
 func _set_health(value):
 	var prev_health = health
 	health = clamp(value,0,max_health)
-	update()
+	#update()
 	if health != prev_health:
 		emit_signal("health_updated", health)
 		if health == 0:
